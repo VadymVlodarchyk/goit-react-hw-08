@@ -1,23 +1,49 @@
+import { Route, Routes } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import ContactForm from './components/ContactForm/ContactForm';
-import SearchBox from './components/SearchBox/SearchBox';
-import ContactList from './components/ContactList/ContactList';
-import { fetchContacts } from './redux/contactsOps';
 
-export default function App() {
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ContactsPage from './pages/ContactsPage';
+
+import { PrivateRoute } from './routes/PrivateRoute';
+import { RestrictedRoute } from './routes/RestrictedRoute';
+
+import Layout from './components/Layout/Layout';
+import { refreshUser } from './redux/auth/operations';
+import { selectIsRefreshing } from './redux/auth/selectors';
+
+const App = () => {
   const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
-    <div>
-      <h1>Книга контактів</h1>
-      <ContactForm />
-      <SearchBox />
-      <ContactList />
-    </div>
+  return isRefreshing ? (
+    <p>Оновлення користувача...</p>
+  ) : (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route
+          path="/register"
+          element={<RestrictedRoute element={<RegisterPage />} />}
+        />
+        <Route
+          path="/login"
+          element={<RestrictedRoute element={<LoginPage />} />}
+        />
+        <Route
+          path="/contacts"
+          element={<PrivateRoute element={<ContactsPage />} />}
+        />
+        <Route path="*" element={<HomePage />} />
+      </Route>
+    </Routes>
   );
-}
+};
+
+export default App;
