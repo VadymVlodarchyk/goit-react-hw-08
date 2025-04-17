@@ -1,7 +1,5 @@
-
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../../services/api';
-
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
@@ -19,7 +17,9 @@ export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (contact, thunkAPI) => {
     try {
-      const { data } = await api.post('/contacts', contact);
+      // додаємо поле number, щоб задовольнити API
+      const contactWithNumber = { ...contact, number: '-' };
+      const { data } = await api.post('/contacts', contactWithNumber);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

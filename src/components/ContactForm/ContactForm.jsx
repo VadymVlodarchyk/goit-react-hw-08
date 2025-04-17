@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contacts/operations';
+import { addContact } from '../../redux/contacts/operations'; // заміни назву action на addTask у майбутньому
 import { useState } from 'react';
 import css from './ContactForm.module.css';
 
@@ -9,9 +9,14 @@ const ContactForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (!name.trim()) return;
+    const trimmedName = name.trim();
+    if (!trimmedName) return;
 
-    dispatch(addContact({ name }));
+    const newTask = {
+      name: trimmedName,
+    };
+
+    dispatch(addContact(newTask));
     setName('');
   };
 
