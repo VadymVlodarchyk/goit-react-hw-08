@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteTask } from '../../redux/contacts/operations';
 import { selectTasks } from '../../redux/contacts/selectors';
 import css from './ContactList.module.css';
-
+// 1
 const ContactList = () => {
   const dispatch = useDispatch();
   const tasks = useSelector(selectTasks);
