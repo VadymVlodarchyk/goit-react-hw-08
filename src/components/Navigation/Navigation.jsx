@@ -9,7 +9,7 @@ const Navigation = () => {
   return (
     <nav className={css.nav}>
       <NavLink to="/" className={css.link}>Home</NavLink>
-      {isLoggedIn && <NavLink to="/contacts" className={css.link}>Tasks</NavLink>}
+      {isLoggedIn && <NavLink to="/contacts" className={css.link}>Contacts</NavLink>}
     </nav>
   );
 };
