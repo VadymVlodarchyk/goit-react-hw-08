@@ -1,23 +1,27 @@
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contacts/operations'; // заміни назву action на addTask у майбутньому
+import { addContact } from '../../redux/contacts/operations'; // пізніше перейменуємо на addTask, якщо треба
 import { useState } from 'react';
 import css from './ContactForm.module.css';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
     const trimmedName = name.trim();
-    if (!trimmedName) return;
+    const trimmedNumber = number.trim();
+    if (!trimmedName || !trimmedNumber) return;
 
-    const newTask = {
+    const newContact = {
       name: trimmedName,
+      number: trimmedNumber,
     };
 
-    dispatch(addContact(newTask));
+    dispatch(addContact(newContact));
     setName('');
+    setNumber('');
   };
 
   return (
@@ -27,10 +31,17 @@ const ContactForm = () => {
         value={name}
         onChange={e => setName(e.target.value)}
         className={css.input}
-        placeholder="New task"
+        placeholder="Ім’я"
+      />
+      <input
+        type="tel"
+        value={number}
+        onChange={e => setNumber(e.target.value)}
+        className={css.input}
+        placeholder="Номер телефону"
       />
       <button type="submit" className={css.button}>
-        Add task
+        Додати контакт
       </button>
     </form>
   );

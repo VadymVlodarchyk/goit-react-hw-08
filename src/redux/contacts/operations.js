@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../../services/api';
 
-export const fetchContacts = createAsyncThunk(
-  'contacts/fetchAll',
+export const fetchTasks = createAsyncThunk(
+  'tasks/fetchAll',
   async (_, thunkAPI) => {
     try {
       const { data } = await api.get('/contacts');
@@ -13,13 +13,12 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
-export const addContact = createAsyncThunk(
-  'contacts/addContact',
-  async (contact, thunkAPI) => {
+export const addTask = createAsyncThunk(
+  'tasks/addTask',
+  async (task, thunkAPI) => {
     try {
-      // додаємо поле number, щоб задовольнити API
-      const contactWithNumber = { ...contact, number: '-' };
-      const { data } = await api.post('/contacts', contactWithNumber);
+      const taskWithNumber = { ...task, number: '-' };
+      const { data } = await api.post('/contacts', taskWithNumber);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -27,12 +26,12 @@ export const addContact = createAsyncThunk(
   }
 );
 
-export const deleteContact = createAsyncThunk(
-  'contacts/deleteContact',
-  async (contactId, thunkAPI) => {
+export const deleteTask = createAsyncThunk(
+  'tasks/deleteTask',
+  async (taskId, thunkAPI) => {
     try {
-      await api.delete(`/contacts/${contactId}`);
-      return contactId;
+      await api.delete(`/contacts/${taskId}`);
+      return taskId;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
