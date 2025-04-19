@@ -1,19 +1,20 @@
+
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteTask } from '../../redux/contacts/operations';
-import { selectTasks } from '../../redux/contacts/selectors';
+import { deleteContact } from '../../redux/contacts/operations';
+import { selectFilteredContacts } from '../../redux/contacts/selectors';
 import css from './ContactList.module.css';
-// 1
+
 const ContactList = () => {
   const dispatch = useDispatch();
-  const tasks = useSelector(selectTasks);
+  const contacts = useSelector(selectFilteredContacts);
 
   return (
     <ul className={css.list}>
-      {tasks.map(({ id, name }) => (
+      {contacts.map(({ id, name, number }) => (
         <li key={id} className={css.item}>
-          <span>{name}</span>
+          <span>{name}: {number}</span>
           <button
-            onClick={() => dispatch(deleteTask(id))}
+            onClick={() => dispatch(deleteContact(id))}
             className={css.button}
           >
             Delete

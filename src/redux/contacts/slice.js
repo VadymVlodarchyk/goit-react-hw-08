@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchTasks, addTask, deleteTask } from './operations'; 
+import { fetchContacts, addContact, deleteContact } from './operations';
 import { logout } from '../auth/operations';
 
 const contactsSlice = createSlice({
@@ -11,22 +11,22 @@ const contactsSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(fetchTasks.pending, state => { 
+      .addCase(fetchContacts.pending, state => {
         state.isLoading = true;
       })
-      .addCase(fetchTasks.fulfilled, (state, action) => { 
+      .addCase(fetchContacts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
         state.items = action.payload;
       })
-      .addCase(fetchTasks.rejected, (state, action) => { 
+      .addCase(fetchContacts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(addTask.fulfilled, (state, action) => {
+      .addCase(addContact.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
-      .addCase(deleteTask.fulfilled, (state, action) => {
+      .addCase(deleteContact.fulfilled, (state, action) => {
         state.items = state.items.filter(contact => contact.id !== action.payload);
       })
       .addCase(logout.fulfilled, state => {

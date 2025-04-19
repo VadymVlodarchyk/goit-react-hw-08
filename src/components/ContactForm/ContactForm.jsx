@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { addTask } from '../../redux/contacts/operations'; 
+import { addContact } from '../../redux/contacts/operations'; 
 import { useState } from 'react';
 import css from './ContactForm.module.css';
 
@@ -19,7 +19,7 @@ const ContactForm = () => {
       number: trimmedNumber,
     };
 
-    dispatch(addTask(newContact));
+    dispatch(addContact(newContact));
     setName('');
     setNumber('');
   };
